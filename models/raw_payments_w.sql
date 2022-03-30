@@ -1,6 +1,6 @@
 select
 order_id,
-'test' as test
+'test' as test,
 {% for payment_method in ["bank_transfer", "credit_card", "gift_card"] %}
 sum(case when payment_method = '{{payment_method}}' then amount end) as {{payment_method}}_amount,
 {% endfor %}
