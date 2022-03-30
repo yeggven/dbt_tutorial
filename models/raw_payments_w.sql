@@ -2,10 +2,9 @@
 
 select
 order_id,
-'test' as test,
-{% for payment_method in ["bank_transfer", "credit_card", "gift_card"] %}
-sum(case when payment_method = '{{payment_method}}' then amount end) as {{payment_method}}_amount,
+{% for payment_method in payment_methods %}
+sum(case when payment_method = '{{payment_method}}' then amount end) as {{payment_method}}_amount
 {% if not loop.last %},{% endif %}
-sum(amount) as total_amount
+{% endfor %}
 from {{ ref('raw_payments') }}
 group by 1
